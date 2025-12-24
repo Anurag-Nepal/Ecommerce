@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>User Profile</title>
+</head>
+<body>
+	<section>
+		<div class="container mt-5">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="card">
+						<div class="card-body text-center">
+							<img th:src="@{'/img/profile_img/'+${user.profileImage}}"
+								 alt="Profile Image" class="rounded-circle mb-3"
+								 style="width: 150px; height: 150px; object-fit: cover;">
+							<h5 class="card-title" th:text="${user.name}"></h5>
+							<p class="text-muted" th:text="${user.email}"></p>
+							<a href="/user/edit-profile" class="btn btn-primary btn-sm">Edit Profile</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-8">
+					<div class="card">
+						<div class="card-header bg-danger text-white">
+							<h5>Profile Information</h5>
+						</div>
+						<div class="card-body">
+							<div class="row mb-3">
+								<div class="col-md-6">
+									<label class="fw-bold">Name:</label>
+									<p th:text="${user.name}"></p>
+								</div>
+								<div class="col-md-6">
+									<label class="fw-bold">Email:</label>
+									<p th:text="${user.email}"></p>
+								</div>
+							</div>
+
+							<div class="row mb-3">
+								<div class="col-md-6">
+									<label class="fw-bold">Mobile:</label>
+									<p th:text="${user.mobile}"></p>
+								</div>
+								<div class="col-md-6">
+									<label class="fw-bold">City:</label>
+									<p th:text="${user.city}"></p>
+								</div>
+							</div>
+
+							<div class="row mb-3">
+								<div class="col-md-6">
+									<label class="fw-bold">State:</label>
+									<p th:text="${user.state}"></p>
+								</div>
+								<div class="col-md-6">
+									<label class="fw-bold">Pin Code:</label>
+									<p th:text="${user.pinCode}"></p>
+								</div>
+							</div>
+
+							<div class="row mb-3">
+								<div class="col-md-12">
+									<label class="fw-bold">Address:</label>
+									<p th:text="${user.address}"></p>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12">
+									<a href="/user/edit-profile" class="btn btn-warning">Edit Profile</a>
+									<a href="/user/" class="btn btn-secondary">Go Back</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="card mt-3">
+						<div class="card-header bg-danger text-white">
+							<h5>Account Details</h5>
+						</div>
+						<div class="card-body">
+							<div class="row mb-3">
+								<div class="col-md-6">
+									<label class="fw-bold">Account Status:</label>
+									<p>
+										<span th:if="${user.isEnable == true}" class="badge bg-success">Active</span>
+										<span th:if="${user.isEnable == false}" class="badge bg-danger">Inactive</span>
+									</p>
+								</div>
+								<div class="col-md-6">
+									<label class="fw-bold">Account Locked:</label>
+									<p>
+										<span th:if="${user.accountStatusNonLocked == true}" class="badge bg-success">Unlocked</span>
+										<span th:if="${user.accountStatusNonLocked == false}" class="badge bg-danger">Locked</span>
+									</p>
+								</div>
+							</div>
+
+							<div class="row mb-3">
+								<div class="col-md-6">
+									<label class="fw-bold">Role:</label>
+									<p th:text="${user.role}"></p>
+								</div>
+								<div class="col-md-6">
+									<label class="fw-bold">Member Since:</label>
+									<p th:text="${#temporals.format(user.createdAt, 'dd-MMM-yyyy')}"></p>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12">
+									<a href="#" class="btn btn-info">View Orders</a>
+									<a href="/user/change-password" class="btn btn-warning">Change Password</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+</body>
+</html>
+
