@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>Update Order Status | Admin</title>
+</head>
+<body>
+	<section>
+		<div class="container p-5">
+			<div class="mb-3">
+				<a th:href="@{/admin/manage-orders}" class="btn btn-secondary">
+					<i class="fas fa-arrow-left"></i> Back to Orders
+				</a>
+			</div>
+
+			<h3 class="mb-4">Update Order Status</h3>
+
+			<th:block th:if="${session.successMsg}">
+				<div class="alert alert-success alert-dismissible fade show" role="alert">
+					[[${session.successMsg}]]
+					<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+				</div>
+				<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+			</th:block>
+			<th:block th:if="${session.errorMsg}">
+				<div class="alert alert-danger alert-dismissible fade show" role="alert">
+					[[${session.errorMsg}]]
+					<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+				</div>
+				<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+			</th:block>
+
+			<div class="card">
+				<div class="card-header bg-danger text-white">
+					<h5>Order #[[${order.id}]]</h5>
+				</div>
+				<div class="card-body">
+					<div class="row mb-4">
+						<div class="col-md-6">
+							<p><strong>Customer:</strong> [[${order.user.name}]]</p>
+							<p><strong>Email:</strong> [[${order.user.email}]]</p>
+							<p><strong>Phone:</strong> [[${order.phoneNumber}]]</p>
+						</div>
+						<div class="col-md-6">
+							<p><strong>Order Date:</strong> [[${#temporals.format(order.orderDate, 'dd-MMM-yyyy HH:mm:ss')}]]</p>
+							<p><strong>Total Price:</strong> &#2547; [[${order.totalPrice}]]</p>
+							<p><strong>Current Status:</strong>
+								<span th:if="${order.orderStatus == 'Pending'}" class="badge bg-warning text-dark">Pending</span>
+								<span th:if="${order.orderStatus == 'Confirmed'}" class="badge bg-info">Confirmed</span>
+								<span th:if="${order.orderStatus == 'Shipped'}" class="badge bg-primary">Shipped</span>
+								<span th:if="${order.orderStatus == 'Delivered'}" class="badge bg-success">Delivered</span>
+								<span th:if="${order.orderStatus == 'Cancelled'}" class="badge bg-danger">Cancelled</span>
+							</p>
+						</div>
+					</div>
+
+					<form th:action="@{/admin/update-order-status}" method="post">
+						<input type="hidden" name="orderId" th:value="${order.id}">
+
+						<div class="mb-3">
+							<label for="orderStatus" class="form-label"><strong>Select New Status:</strong></label>
+							<select class="form-select" id="orderStatus" name="orderStatus" required>
+								<option value="">-- Select Status --</option>
+								<option value="Pending" th:selected="${order.orderStatus == 'Pending'}">
+									<i class="fas fa-hourglass-half"></i> Pending
+								</option>
+								<option value="Confirmed" th:selected="${order.orderStatus == 'Confirmed'}">
+									<i class="fas fa-check-circle"></i> Confirmed
+								</option>
+								<option value="Shipped" th:selected="${order.orderStatus == 'Shipped'}">
+									<i class="fas fa-truck"></i> Shipped
+								</option>
+								<option value="Delivered" th:selected="${order.orderStatus == 'Delivered'}">
+									<i class="fas fa-box-open"></i> Delivered
+								</option>
+								<option value="Cancelled" th:selected="${order.orderStatus == 'Cancelled'}">
+									<i class="fas fa-times-circle"></i> Cancelled
+								</option>
+							</select>
+						</div>
+
+						<div class="mb-3">
+							<button type="submit" class="btn btn-primary">
+								<i class="fas fa-save"></i> Update Status
+							</button>
+							<a th:href="@{/admin/order-details/{id}(id=${order.id})}" class="btn btn-secondary">
+								<i class="fas fa-times"></i> Cancel
+							</a>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>
+

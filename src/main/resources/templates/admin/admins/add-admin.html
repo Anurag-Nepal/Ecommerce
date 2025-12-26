@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>Add Admin | Admin</title>
+</head>
+<body>
+	<section>
+		<div class="container mt-5">
+			<div class="row justify-content-center">
+				<div class="col-md-8">
+					<div class="card">
+						<div class="card-header bg-danger text-white">
+							<h5>Add New Admin</h5>
+						</div>
+						<div class="card-body">
+							<form th:action="@{/admin/save-admin}" method="post" enctype="multipart/form-data">
+								<div class="mb-3">
+									<label class="form-label">Name</label>
+									<input type="text" name="name" placeholder="Admin Name" class="form-control" required>
+								</div>
+
+								<div class="mb-3">
+									<label class="form-label">Email</label>
+									<input type="email" name="email" placeholder="Email" class="form-control" required>
+								</div>
+
+								<div class="mb-3">
+									<label class="form-label">Mobile</label>
+									<input type="text" name="mobile" placeholder="Mobile Number" class="form-control" required>
+								</div>
+
+								<div class="mb-3">
+									<label class="form-label">City</label>
+									<input type="text" name="city" placeholder="City" class="form-control" required>
+								</div>
+
+								<div class="mb-3">
+									<label class="form-label">State</label>
+									<input type="text" name="state" placeholder="State" class="form-control" required>
+								</div>
+
+								<div class="mb-3">
+									<label class="form-label">Password</label>
+									<input type="password" name="password" placeholder="Password" class="form-control" required>
+								</div>
+
+								<div class="mb-3">
+									<label class="form-label">Profile Image</label>
+									<input type="file" name="file" accept="image/*" class="form-control">
+								</div>
+
+								<div class="text-center">
+									<button type="submit" class="btn btn-danger">Add Admin</button>
+									<a href="/admin/manage-admins" class="btn btn-secondary">Cancel</a>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>
+
