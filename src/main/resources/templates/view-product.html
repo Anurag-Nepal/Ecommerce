@@ -3,140 +3,432 @@
 	th:replace="~{base::layout(~{::section})}">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title th:text="${product.productTitle} + ' - Product Details'">Product Details</title>
+<style>
+	.product-detail-container {
+		margin-top: 30px;
+		margin-bottom: 50px;
+	}
+
+	.product-image-section {
+		position: sticky;
+		top: 80px;
+	}
+
+	.product-main-image {
+		width: 100%;
+		border-radius: 12px;
+		box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+		object-fit: cover;
+		max-height: 500px;
+	}
+
+	.product-info-section {
+		background: white;
+		padding: 30px;
+		border-radius: 12px;
+		box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+	}
+
+	.product-title-main {
+		font-size: 28px;
+		font-weight: 700;
+		color: #2c3e50;
+		margin-bottom: 15px;
+		line-height: 1.3;
+	}
+
+	.product-rating {
+		color: #f39c12;
+		margin-bottom: 15px;
+	}
+
+	.price-container {
+		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		padding: 20px;
+		border-radius: 10px;
+		margin: 20px 0;
+		color: white;
+	}
+
+	.current-price {
+		font-size: 32px;
+		font-weight: 700;
+		margin-bottom: 5px;
+	}
+
+	.original-price {
+		font-size: 18px;
+		text-decoration: line-through;
+		opacity: 0.8;
+		margin-right: 10px;
+	}
+
+	.discount-badge {
+		background: #27ae60;
+		padding: 5px 12px;
+		border-radius: 20px;
+		font-size: 14px;
+		font-weight: 600;
+		display: inline-block;
+	}
+
+	.product-meta {
+		margin: 25px 0;
+	}
+
+	.meta-item {
+		display: flex;
+		align-items: center;
+		padding: 12px 0;
+		border-bottom: 1px solid #ecf0f1;
+	}
+
+	.meta-item:last-child {
+		border-bottom: none;
+	}
+
+	.meta-label {
+		font-weight: 600;
+		color: #7f8c8d;
+		width: 120px;
+	}
+
+	.meta-value {
+		color: #2c3e50;
+		flex: 1;
+	}
+
+	.stock-status {
+		display: inline-flex;
+		align-items: center;
+		padding: 8px 16px;
+		border-radius: 20px;
+		font-weight: 600;
+		font-size: 14px;
+	}
+
+	.stock-available {
+		background: #d4edda;
+		color: #155724;
+	}
+
+	.stock-unavailable {
+		background: #f8d7da;
+		color: #721c24;
+	}
+
+	.product-description {
+		margin: 25px 0;
+		padding: 20px;
+		background: #f8f9fa;
+		border-radius: 10px;
+		border-left: 4px solid #667eea;
+	}
+
+	.description-title {
+		font-size: 18px;
+		font-weight: 700;
+		color: #2c3e50;
+		margin-bottom: 12px;
+	}
+
+	.description-text {
+		color: #555;
+		line-height: 1.8;
+	}
+
+	.action-buttons {
+		margin-top: 30px;
+	}
+
+	.btn-add-to-cart {
+		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		color: white;
+		border: none;
+		padding: 15px 40px;
+		border-radius: 8px;
+		font-size: 16px;
+		font-weight: 600;
+		transition: all 0.3s ease;
+		margin-right: 15px;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+	}
+
+	.btn-add-to-cart:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+		color: white;
+	}
+
+	.btn-add-to-cart:disabled {
+		background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+		cursor: not-allowed;
+		transform: none;
+	}
+
+	.btn-buy-now {
+		background: white;
+		color: #667eea;
+		border: 2px solid #667eea;
+		padding: 15px 40px;
+		border-radius: 8px;
+		font-size: 16px;
+		font-weight: 600;
+		transition: all 0.3s ease;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+	}
+
+	.btn-buy-now:hover {
+		background: #667eea;
+		color: white;
+	}
+
+	.features-section {
+		margin-top: 30px;
+		padding: 25px;
+		background: white;
+		border-radius: 10px;
+		box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+	}
+
+	.feature-item {
+		display: flex;
+		align-items: center;
+		padding: 15px 0;
+	}
+
+	.feature-icon {
+		width: 50px;
+		height: 50px;
+		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: white;
+		font-size: 20px;
+		margin-right: 15px;
+	}
+
+	.feature-text {
+		flex: 1;
+	}
+
+	.feature-title {
+		font-weight: 600;
+		color: #2c3e50;
+		margin-bottom: 3px;
+	}
+
+	.feature-desc {
+		font-size: 13px;
+		color: #7f8c8d;
+	}
+
+	@media (max-width: 768px) {
+		.product-title-main {
+			font-size: 22px;
+		}
+		.current-price {
+			font-size: 26px;
+		}
+		.product-info-section {
+			padding: 20px;
+			margin-top: 20px;
+		}
+		.btn-add-to-cart,
+		.btn-buy-now {
+			width: 100%;
+			margin-right: 0;
+			margin-bottom: 10px;
+		}
+		.product-image-section {
+			position: static;
+		}
+	}
+</style>
 </head>
 <body>
 	<section>
-		<div class="container custom-card-shadow" style="margin-top: 60px; margin-bottom: 90px;">
+		<!-- Toast Messages -->
+		<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;">
+			<div th:if="${session.successMsg}" class="toast show" role="alert">
+				<div class="toast-header bg-success text-white">
+					<strong class="me-auto"><i class="fas fa-check-circle"></i> Success</strong>
+					<button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+				</div>
+				<div class="toast-body"><b>[[${session.successMsg}]]</b></div>
+				<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+			</div>
+
+			<div th:if="${session.errorMsg}" class="toast show" role="alert">
+				<div class="toast-header bg-danger text-white">
+					<strong class="me-auto"><i class="fas fa-exclamation-circle"></i> Error</strong>
+					<button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+				</div>
+				<div class="toast-body"><b>[[${session.errorMsg}]]</b></div>
+			</div>
+		</div>
+
+		<!-- Product Detail -->
+		<div class="container product-detail-container">
+			<!-- Breadcrumb -->
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="/">Home</a></li>
+					<li class="breadcrumb-item"><a href="/products">Products</a></li>
+					<li class="breadcrumb-item active" th:text="${product.productCategory}">Category</li>
+				</ol>
+			</nav>
+
 			<div class="row">
-				<div class="col-md-12 p-5">
-					<div class="row">
+				<!-- Product Image -->
+				<div class="col-lg-5 col-md-6">
+					<div class="card shadow-sm border-0" style="border-radius:12px; overflow:hidden;">
+						<img th:src="${#strings.isEmpty(product.productImage)} ? @{/img/login.jpg} : @{/uploads/product_image/{img}(img=${product.productImage})}"
+							 th:alt="${product.productTitle}"
+							 style="width:100%; height:260px; object-fit:cover;">
+					</div>
+				</div>
 
+				<!-- Product Info -->
+				<div class="col-lg-7 col-md-6">
+					<div class="product-info-section">
+						<h1 class="product-title-main" th:text="${product.productTitle}">Product Title</h1>
 
-						<!-- <div class="toast-container position-fixed bottom-0 end-0 p-3">
-							<div class="toast" role="alert" aria-live="assertive"
-								aria-atomic="true" data-bs-autohide="true">
-								<div class="toast-header">
-									<strong class="me-auto">Success</strong>
-									<button type="button" class="btn-close" data-bs-dismiss="toast"
-										aria-label="Close"></button>
-								</div>
-								<div class="toast-body">[[${session.successMsg}]]</div>
-								<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
-							</div>
-						</div> -->
-
-
-						<!-- Bootstrap Toast -->
-						
-						<div class="toast-container position-fixed top-0 end-0 p-3">
-							<div class="toast " role="alert" aria-live="assertive"
-								aria-atomic="true">
-								<div class="toast-header bg-success">
-
-									<strong class="me-auto text-white">Success</strong> <small
-										class="text-muted text-white">just now</small>
-									<button type="button" class="btn-close" data-bs-dismiss="toast"
-										aria-label="Close"></button>
-								</div>
-								<div class="toast-body"><b>[[${session.successMsg}]]</b></div>
-								<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
-							</div>
-						</div>
-						
-						
-						<div class="toast-container position-fixed top-0 end-0 p-3">
-							<div class="toast " role="alert" aria-live="assertive"
-								aria-atomic="true">
-								<div class="toast-header bg-danger">
-
-									<strong class="me-auto text-white">Error</strong> <small
-										class="text-muted text-white">just now</small>
-									<button type="button" class="btn-close" data-bs-dismiss="toast"
-										aria-label="Close"></button>
-								</div>
-								<div class="toast-body"><b>[[${session.errorMsg}]]</b></div>
-								<!-- <th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block> -->
-								
-							</div>
-						</div>
-						
-						<!-- Bootstrap Toast -->
-
-
-
-						<!-- <th:block th:if="${session.successMsg}">
-							<p class="text-success fw-bold text-center mt-2 alert alert-success">[[${session.successMsg}]]</p>
-							<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
-
-						</th:block>
-						<th:block th:if="${session.errorMsg}">
-							<p class="text-danger fw-bold text-center mt-2 alert alert-danger">[[${session.errorMsg}]]</p>
-							<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
-						</th:block> -->
-						
-						
-
-
-						<div class="col-md-6 text-center">
-							<img alt="product_image" th:src="@{'/img/product_image/'+${product.productImage}}"
-								width="330px" height="400px">
+						<div class="product-rating">
+							<i class="fas fa-star"></i>
+							<i class="fas fa-star"></i>
+							<i class="fas fa-star"></i>
+							<i class="fas fa-star"></i>
+							<i class="far fa-star"></i>
+							<span class="text-muted ms-2">(4.0 / 5.0)</span>
 						</div>
 
+						<!-- Price Section -->
+						<div class="price-container">
+							<div class="current-price">
+								Rs <span th:text="${product.discountPrice != null ? product.discountPrice : product.productPrice}">0</span>
+							</div>
+							<div th:if="${product.discount > 0}">
+								<span class="original-price">Rs <span th:text="${product.productPrice}">0</span></span>
+								<span class="discount-badge">Save <span th:text="${product.discount}">0</span>%</span>
+							</div>
+							<div th:if="${product.discount == 0}">
+								<small>Best price guaranteed</small>
+							</div>
+						</div>
 
-						<div class="col-md-6">
-		 					<p class="fs-3">[[${product.productTitle}]]</p>
-							<p>
-								<span class="fw-bold">Description:</span><br>[[${product.productDescription}]]
-							</p>
-							<p>
-								<span class="fw-bold">Product Details:</span> <br> 
-								Status :
-								<th:block th:if="${product.productStock > 0}">
-									<span class="badge bg-success">Available</span><br>
+						<!-- Product Meta -->
+						<div class="product-meta">
+							<div class="meta-item">
+								<span class="meta-label"><i class="fas fa-box"></i> Availability:</span>
+								<span class="meta-value">
+									<span th:if="${product.productStock > 0}" class="stock-status stock-available">
+										<i class="fas fa-check-circle"></i> In Stock (<span th:text="${product.productStock}">0</span> units)
+									</span>
+									<span th:if="${product.productStock <= 0}" class="stock-status stock-unavailable">
+										<i class="fas fa-times-circle"></i> Out of Stock
+									</span>
+								</span>
+							</div>
+
+							<div class="meta-item">
+								<span class="meta-label"><i class="fas fa-tag"></i> Category:</span>
+								<span class="meta-value">
+									<a th:href="@{'/products?category='+${product.productCategory}}"
+									   class="text-decoration-none">
+										<span th:text="${product.productCategory}">Category</span>
+									</a>
+								</span>
+							</div>
+
+							<div class="meta-item">
+								<span class="meta-label"><i class="fas fa-shield-alt"></i> Warranty:</span>
+								<span class="meta-value">7 Days Replacement & Return Policy</span>
+							</div>
+						</div>
+
+						<!-- Description -->
+						<div class="product-description">
+							<div class="description-title"><i class="fas fa-info-circle"></i> Product Description</div>
+							<div class="description-text" th:text="${product.productDescription}">
+								Product description goes here...
+							</div>
+						</div>
+
+						<!-- Action Buttons -->
+						<div class="action-buttons">
+							<th:block th:if="${product.productStock > 0}">
+								<th:block th:if="${currentLoggedInUserDetails != null}">
+									<a th:href="@{'/user/add-to-cart?productId='+${product.id}}"
+									   class="btn-add-to-cart">
+										<i class="fas fa-shopping-cart"></i> Add to Cart
+									</a>
 								</th:block>
-								<th:block th:unless="${product.productStock > 0}">
-									<span class="badge bg-warning">Out of stock</span> <br>
+								<th:block th:if="${currentLoggedInUserDetails == null}">
+									<a href="/login" class="btn-add-to-cart">
+										<i class="fas fa-sign-in-alt"></i> Login to Purchase
+									</a>
 								</th:block>
-								 
-								
-								Category: [[${product.productCategory}]] <br>Policy: 7 Days Replacement & Return
-							</p>
-							<p class="fs-5 fw-bold">
-								Price: &nbsp; &nbsp; &nbsp; &nbsp; <i
-									class="fa-solid fa-bangladeshi-taka-sign"></i> [[${product.discountPrice}]] <span
-									class="fs-6 text-decoration-line-through text-secondary">[[${product.productPrice}]]</span>
-								<span class="fs-6 text-success">[[${product.discount}]]% Off</span>
-							</p>
-							<div class="row">
-								<div class="col-md-4 text-success text-center p-2">
-									<i class="fas fa-money-bill-wave fa-2x"></i>
-									<p>Cash On Delivery</p>
+							</th:block>
+							<th:block th:if="${product.productStock <= 0}">
+								<button class="btn-add-to-cart" disabled>
+									<i class="fas fa-ban"></i> Currently Unavailable
+								</button>
+							</th:block>
+						</div>
+					</div>
+
+					<!-- Features Section -->
+					<div class="features-section">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="feature-item">
+									<div class="feature-icon">
+										<i class="fas fa-truck"></i>
+									</div>
+									<div class="feature-text">
+										<div class="feature-title">Free Delivery</div>
+										<div class="feature-desc">On orders above Rs 1000</div>
+									</div>
 								</div>
-								<div class="col-md-4 text-success text-center p-2">
-									<i class="fas fa-undo-alt fa-2x"></i>
-									<p>Return Available</p>
+							</div>
+							<div class="col-md-6">
+								<div class="feature-item">
+									<div class="feature-icon">
+										<i class="fas fa-undo"></i>
+									</div>
+									<div class="feature-text">
+										<div class="feature-title">Easy Returns</div>
+										<div class="feature-desc">7 days return policy</div>
+									</div>
 								</div>
-								<div class="col-md-4 text-success text-center p-2">
-									<i class="fas fa-truck-moving fa-2x"></i>
-									<p>Free Shipping</p>
+							</div>
+							<div class="col-md-6">
+								<div class="feature-item">
+									<div class="feature-icon">
+										<i class="fas fa-money-bill-wave"></i>
+									</div>
+									<div class="feature-text">
+										<div class="feature-title">Cash on Delivery</div>
+										<div class="feature-desc">Pay when you receive</div>
+									</div>
 								</div>
-								<th:block th:if="${product.productStock > 0}">
-									<!-- user is not logged in this is coming from:  Global ModelAttribute Method-->
-									<th:block th:if="${currentLoggedInUserDetails==null}">
-										<a href="/signin" class="btn btn-danger col-md-12">Add To Cart</a>
-									</th:block>
-									
-									<!-- user is logged in this is coming from:  Global ModelAttribute Method-->
-									<th:block th:unless="${currentLoggedInUserDetails ==null}">
-										<a th:href="@{'/user/add-to-cart?productId='+${product.id}+'&userId='+${currentLoggedInUserDetails.id}}" class="btn btn-danger col-md-12">Add To Cart</a>
-									</th:block>
-								</th:block>
-								<th:block th:unless="${product.productStock > 0}">
-									<a href="#" class="btn text-white btn-warning col-md-12">Out of Stock</a>
-								</th:block>
-								
-								
+							</div>
+							<div class="col-md-6">
+								<div class="feature-item">
+									<div class="feature-icon">
+										<i class="fas fa-headset"></i>
+									</div>
+									<div class="feature-text">
+										<div class="feature-title">24/7 Support</div>
+										<div class="feature-desc">Customer service available</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>

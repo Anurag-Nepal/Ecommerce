@@ -1,5 +1,6 @@
 package com.anuragNepal.ecommerce.service.impl;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -27,6 +28,25 @@ public class CategoryServiceImpl implements CategoryService{
 	
 	@Value("${app.upload.dir}")
 	private String uploadDir;
+	
+	// Helper method to resolve upload directory path
+	private Path resolveUploadPath(String... subPaths) {
+		File uploadFile = new File(uploadDir);
+		Path basePath;
+		
+		if (uploadFile.isAbsolute()) {
+			basePath = uploadFile.toPath();
+		} else {
+			basePath = Paths.get(uploadDir).toAbsolutePath();
+		}
+		
+		// Append sub-paths if provided
+		for (String subPath : subPaths) {
+			basePath = basePath.resolve(subPath);
+		}
+		
+		return basePath;
+	}
 	
 	@Override
 	public Category saveCategory(Category category) {
@@ -56,7 +76,7 @@ public class CategoryServiceImpl implements CategoryService{
 				String categoryImage = categoryFound.getCategoryImage();
 				if(categoryImage != null && !categoryImage.equals("default.jpg")) {
 					try {
-						Path imagePath = Paths.get(uploadDir, "category", categoryImage);
+						Path imagePath = resolveUploadPath("category", categoryImage);
 						Files.deleteIfExists(imagePath);
 					} catch(Exception e) {
 						logger.warn("Could not delete category image: " + categoryImage, e);

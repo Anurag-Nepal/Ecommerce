@@ -1,5 +1,6 @@
 package com.anuragNepal.ecommerce.service.impl;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -30,6 +31,25 @@ public class ProductServiceImpl implements ProductService{
 	@Value("${app.upload.dir}")
 	private String uploadDir;
 	
+	// Helper method to resolve upload directory path
+	private Path resolveUploadPath(String... subPaths) {
+		File uploadFile = new File(uploadDir);
+		Path basePath;
+		
+		if (uploadFile.isAbsolute()) {
+			basePath = uploadFile.toPath();
+		} else {
+			basePath = Paths.get(uploadDir).toAbsolutePath();
+		}
+		
+		// Append sub-paths if provided
+		for (String subPath : subPaths) {
+			basePath = basePath.resolve(subPath);
+		}
+		
+		return basePath;
+	}
+	
 	@Override
 	public Product saveProduct(Product product) {
 		return productRepository.save(product);
@@ -49,7 +69,7 @@ public class ProductServiceImpl implements ProductService{
 				String productImage = product.get().getProductImage();
 				if(productImage != null && !productImage.equals("default.jpg")) {
 					try {
-						Path imagePath = Paths.get(uploadDir, "product_image", productImage);
+						Path imagePath = resolveUploadPath("product_image", productImage);
 						Files.deleteIfExists(imagePath);
 					} catch(Exception e) {
 						logger.warn("Could not delete product image: " + productImage, e);
@@ -102,7 +122,7 @@ public class ProductServiceImpl implements ProductService{
 		if(!ObjectUtils.isEmpty(updatedProduct)) {
 			if(!file.isEmpty()) {
 				try {
-					Path productPath = Paths.get(uploadDir, "product_image");
+					Path productPath = resolveUploadPath("product_image");
 					Files.createDirectories(productPath);
 					Path path = productPath.resolve(file.getOriginalFilename());
 					logger.info("File save Path :{}", path);

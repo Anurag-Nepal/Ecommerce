@@ -4,6 +4,199 @@
 <head>
 <meta charset="UTF-8">
 <title>E-Store | Ecommerce Website</title>
+<style>
+	/* Global Styles */
+	body {
+		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	}
+
+	/* Banner Carousel */
+	.main-carousel {
+		margin-bottom: 20px;
+	}
+
+	.main-carousel .carousel-item img {
+		height: 320px;
+		object-fit: cover;
+	}
+
+	/* Category Section */
+	.category-section {
+		padding: 50px 0;
+		background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+	}
+
+	.category-card {
+		background: white;
+		border-radius: 12px;
+		box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+		transition: all 0.3s ease;
+		overflow: hidden;
+		text-decoration: none;
+		display: block;
+		margin: 0 10px;
+	}
+
+	.category-card:hover {
+		transform: translateY(-10px);
+		box-shadow: 0 8px 25px rgba(102, 126, 234, 0.25);
+	}
+
+	.category-img-wrapper {
+		position: relative;
+		overflow: hidden;
+		height: 100px;
+		background: #f8f9fa;
+	}
+
+	.category-card img {
+		width: 100%;
+		height: 100px;
+		object-fit: cover;
+		transition: transform 0.4s ease;
+	}
+
+	.category-card:hover img {
+		transform: scale(1.15);
+	}
+
+	.category-card .category-name {
+		padding: 12px 15px;
+		text-align: center;
+		font-size: 13px;
+		font-weight: 600;
+		color: #2c3e50;
+		margin: 0;
+		background: white;
+		border-top: 3px solid transparent;
+		transition: all 0.3s ease;
+	}
+
+	.category-card:hover .category-name {
+		border-top-color: #667eea;
+		color: #667eea;
+	}
+
+	/* Product Section Styles */
+	.product-section {
+		padding: 24px 0;
+		background-color: #f7f9fc;
+	}
+
+	.product-card {
+		background: white;
+		border: 1px solid #e5e7eb;
+		border-radius: 10px;
+		transition: all 0.3s ease;
+		overflow: hidden;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+	}
+
+	.product-card:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+		border-color: #667eea;
+	}
+
+	.product-card img {
+		width: 100%;
+		height: 150px;
+		object-fit: cover;
+		background: #f2f3f5;
+	}
+
+	.product-card .card-body {
+		padding: 10px;
+		flex-grow: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+	}
+
+	.product-title {
+		font-size: 12px;
+		font-weight: 600;
+		color: #2c3e50;
+		margin: 0;
+		min-height: 30px;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	.price-section { margin-bottom: 4px; }
+
+	.product-price { font-size: 15px; font-weight: 700; color: #e74c3c; }
+
+	.product-original-price { font-size: 11px; color: #95a5a6; text-decoration: line-through; margin-left: 6px; }
+
+	.product-discount { display: inline-block; background: #27ae60; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 600; margin-left: 6px; }
+
+	.btn-add-cart {
+		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		color: white;
+		border: none;
+		padding: 7px 10px;
+		border-radius: 6px;
+		font-size: 11px;
+		font-weight: 600;
+		transition: all 0.3s ease;
+		width: 100%;
+		margin-top: auto;
+	}
+
+	.btn-add-cart:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(102, 126, 234, 0.35); color: white; }
+
+	.btn-view-details {
+		background: white;
+		color: #667eea;
+		border: 1px solid #667eea;
+		padding: 7px 10px;
+		border-radius: 6px;
+		font-size: 11px;
+		font-weight: 600;
+		transition: all 0.3s ease;
+		width: 100%;
+		text-decoration: none;
+		text-align: center;
+	}
+
+	.btn-view-details:hover { background: #667eea; color: white; }
+
+	.section-title {
+		font-size: 28px;
+		font-weight: 700;
+		color: #2c3e50;
+		margin-bottom: 30px;
+		text-align: center;
+		position: relative;
+		padding-bottom: 12px;
+	}
+
+	.section-title::after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 70px;
+		height: 4px;
+		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		border-radius: 3px;
+	}
+
+	.stock-badge { display: inline-block; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; margin-bottom: 8px; }
+	.in-stock { background: #d4edda; color: #155724; }
+	.out-of-stock { background: #f8d7da; color: #721c24; }
+
+	@media (max-width: 992px) { .product-card img { height: 130px; } }
+	@media (max-width: 768px) { .product-card img { height: 115px; } }
+</style>
 </head>
 <body>
 	<section>
@@ -33,306 +226,125 @@
 		</div>
 		<!-- End of Carousel -->
 		
-		
-		<!-- Start of Category -->
-		<!-- <div class="container">
-			<div class="row">
-				<p class="text-center fs-4 mt-5 mb-5">All Category</p>
-				<div class="col-md-2">
-					<div class="card rounded-circle shadow-sm p-3 mb-5 bg-white rounded">
-						<div class="card-body text-center">
-						<img alt="" src="img/category/electronics.png" width="65%" height="140px">
-						<p>Electronics</p>
+		<!-- Category Section -->
+		<div class="category-section" style="background:#f8f9fa; padding:30px 0;">
+    <div class="container">
+        <h2 class="section-title">Shop by Category</h2>
+        <div class="row">
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3" th:each="category : ${latestSixActiveCategory}">
+                <a th:href="@{'/products?category='+${category.categoryName}}" class="category-card" style="border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.08); overflow:hidden; display:block; text-decoration:none;">
+                    <div style="height:90px; overflow:hidden; background:#fff;">
+                        <img th:src="@{'/uploads/category/'+${category.categoryImage}}" th:alt="${category.categoryName}" style="width:100%; height:90px; object-fit:cover; transition:transform .3s;">
+                    </div>
+                    <p class="category-name" style="padding:10px; margin:0; text-align:center; font-weight:600; font-size:13px; color:#2c3e50; background:#fff;">[[${category.categoryName}]]</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+		<!-- End Category Section -->
+
+		<!-- Product Section -->
+		<div class="product-section" style="background:#f8f9fa; padding:30px 0;">
+			<div class="container">
+				<h2 class="section-title">Latest Products</h2>
+
+				<div class="row">
+					<div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3"
+					     th:each="product : ${latestEightActiveProducts}">
+
+						<div class="product-card"
+						     style="border-radius:10px;
+						            box-shadow:0 2px 8px rgba(0,0,0,0.08);
+						            overflow:hidden;
+						            background:#fff;
+						            height:100%;">
+
+							<a th:href="@{'/product/'+${product.id}}"
+							   style="display:block; text-decoration:none;">
+
+								<div style="height:120px; overflow:hidden; background:#fff;">
+									<img th:src="@{'/uploads/product_image/'+${product.productImage}}"
+										 th:alt="${product.productTitle}"
+										 style="width:100%;
+											    height:120px;
+											    object-fit:cover;
+											    transition:transform .3s;">
+								</div>
+
+								<div style="padding:10px; text-align:center;">
+									<p style="margin:0;
+									          font-weight:600;
+									          font-size:13px;
+									          color:#2c3e50;"
+									   th:text="${product.productTitle}">
+										Product Title
+									</p>
+
+									<!-- Stock -->
+									<div style="margin-top:4px;">
+										<span th:if="${product.productStock > 0}"
+										      style="font-size:11px; color:green;">
+											In Stock
+										</span>
+										<span th:if="${product.productStock <= 0}"
+										      style="font-size:11px; color:red;">
+											Out of Stock
+										</span>
+									</div>
+
+									<!-- Price -->
+									<div style="margin-top:6px;">
+										<span style="font-weight:600; color:#000;">
+											Rs
+											<span th:text="${product.discountPrice != null ? product.discountPrice : product.productPrice}">0</span>
+										</span>
+
+										<span th:if="${product.discount > 0}"
+										      style="display:block; font-size:11px; color:#888;">
+											<del>
+												Rs <span th:text="${product.productPrice}">0</span>
+											</del>
+											 • <span th:text="${product.discount}">0</span>% OFF
+										</span>
+									</div>
+								</div>
+							</a>
+
+							<!-- Action Button -->
+							<div style="padding:10px;">
+								<div th:if="${product.productStock > 0}">
+									<th:block th:if="${currentLoggedInUserDetails != null}">
+										<a th:href="@{'/user/add-to-cart?productId='+${product.id}}"
+										   class="btn btn-sm w-100"
+										   style="background:#667eea; color:#fff;">
+											Add to Cart
+										</a>
+									</th:block>
+
+									<th:block th:if="${currentLoggedInUserDetails == null}">
+										<a href="/signin"
+										   class="btn btn-sm w-100"
+										   style="background:#667eea; color:#fff;">
+											Login to Buy
+										</a>
+									</th:block>
+								</div>
+
+								<div th:if="${product.productStock <= 0}">
+									<button class="btn btn-sm w-100" disabled>
+										Out of Stock
+									</button>
+								</div>
+							</div>
+
 						</div>
 					</div>
 				</div>
-				
-				<div class="col-md-2">
-					<div class="card rounded-circle shadow-sm p-3 mb-5 bg-white rounded">
-						<div class="card-body text-center">
-						<img alt="" src="img/category/laptop.png" width="65%" height="140px">
-						<p>Laptop</p>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-md-2">
-					<div class="card rounded-circle shadow-sm p-3 mb-5 bg-white rounded">
-						<div class="card-body text-center">
-						<img alt="" src="img/category/mobile.jpg" width="65%" height="140px">
-						<p>Mobile Phone</p>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-md-2">
-					<div class="card rounded-circle shadow-sm p-3 mb-5 bg-white rounded">
-						<div class="card-body text-center">
-						<img alt="" src="img/category/cloths.png" width="65%" height="140px">
-						<p>Clothes</p>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-md-2">
-					<div class="card rounded-circle shadow-sm p-3 mb-5 bg-white rounded">
-						<div class="card-body text-center">
-						<img alt="" src="img/category/grocery.jpeg" width="65%" height="140px">
-						<p>Grocery</p>
-						</div>
-						
-					</div>
-				</div>
-				
-				<div class="col-md-2">
-					<div class="card rounded-circle shadow-sm p-3 mb-5 bg-white rounded">
-						<div class="card-body text-center">
-						<img alt="" src="img/category/beauty.png" width="65%" height="140px">
-						<p>Beauty & Fashion</p>
-						</div>
-					</div>
-				</div>
-				
-			</div>
-		</div> -->
-		<!-- End of Category -->
-		<!-- new modifications for Clothing store -->
-		<div class="container">
-			<div class="row">
-				<p class="text-center fs-4 mt-5 mb-5">Category</p>
-				<div class="col-md-2" th:each="category: ${latestSixActiveCategory}">
-					<div class="card rounded-circle shadow-sm p-3 mb-5 bg-white rounded">
-						<div class="card-body text-center">
-						<img alt="" th:src="@{'/img/category/'+${category.categoryImage}}" width="100%" height="130px">
-						<p><b>[[${category.categoryName}]]</b></p>
-						</div>
-					</div>
-					
-				</div>
-				
-				<!-- <div class="col-md-2">
-					<div class="card rounded-circle shadow-sm p-3 mb-5 bg-white rounded">
-						<div class="card-body text-center">
-						<img alt="" src="img/category/FormalShirt.jpg" width="100%" height="130px">
-						<p><b>Formal Shirt</b></p>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-md-2">
-					<div class="card rounded-circle shadow-sm p-3 mb-5 bg-white rounded">
-						<div class="card-body text-center">
-						<img alt="" src="img/category/panjabi.jpg" width="100%" height="130px">
-						<p><b>Panjabi</b></p>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-md-2">
-					<div class="card rounded-circle shadow-sm p-3 mb-5 bg-white rounded">
-						<div class="card-body text-center">
-						<img alt="" src="img/category/Pant.jpg" width="100%" height="130px">
-						<p><b>Pant</b></p>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-md-2">
-					<div class="card rounded-circle shadow-sm p-3 mb-5 bg-white rounded">
-						<div class="card-body text-center">
-						<img alt="" src="img/category/Blazer.jpg" width="100%" height="130px">
-						<p><b>Blazer</b></p>
-						</div>
-						
-					</div>
-				</div>
-				
-				<div class="col-md-2">
-					<div class="card rounded-circle shadow-sm p-3 mb-5 bg-white rounded">
-						<div class="card-body text-center">
-						<img alt="" src="img/category/KnitWear.jpg" width="100%" height="130px">
-						<p><b>Knit Wear</b></p>
-						</div>
-					</div>
-				</div> -->
-				
-				<!-- <div class="col-md-2">
-					<div class="card rounded-circle shadow-sm p-3 mb-5 bg-white rounded">
-						<div class="card-body text-center">
-						<img alt="" src="img/category/beauty.png" width="95%" height="140px">
-						<p>Accessories</p>
-						</div>
-					</div>
-				</div> -->
-				
 			</div>
 		</div>
-		<!-- new modifications for Clothing store -->
-		
-		<!-- Start Latest Product Module -->
-		<!-- <div class="container-fluid bg-light p-3">
-			<p class="text-center fs-4">Latest Product</p>
+		<!-- End Product Section -->
 
-			<div class="row">
-				
-				<div class="col-md-3">
-				<div class="card shadow-sm p-3 mb-5 bg-white rounded">
-					<div class="card-body text-center">
-						<img alt="" src="img/product_image/laptop.png" width="65%"
-							height="140px">
-						<p class="text-center">HP Laptop</p>
-					</div>
-				</div>
-			</div>
-			
-			
-			<div class="col-md-3">
-				<div class="card shadow-sm p-3 mb-5 bg-white rounded">
-					<div class="card-body text-center">
-						<img alt="" src="img/product_image/laptop.png" width="65%"
-							height="140px">
-						<p class="text-center">HP Laptop</p>
-					</div>
-				</div>
-			</div>
-			
-			
-			<div class="col-md-3">
-				<div class="card shadow-sm p-3 mb-5 bg-white rounded">
-					<div class="card-body text-center">
-						<img alt="" src="img/product_image/laptop.png" width="65%"
-							height="140px">
-						<p class="text-center">HP Laptop</p>
-					</div>
-				</div>
-			</div>
-			
-			
-			<div class="col-md-3">
-				<div class="card shadow-sm p-3 mb-5 bg-white rounded">
-					<div class="card-body text-center">
-						<img alt="" src="img/product_image/laptop.png" width="65%"
-							height="140px">
-						<p class="text-center">HP Laptop</p>
-					</div>
-				</div>
-			</div>
-				
-				
-			</div>
-
-
-		</div> -->
-		<!-- End of the Latest Product Module -->
-		
-		<!-- Latest Product for Clothing Store -->
-		
-		<div class="container-fluid bg-light p-3">
-			<p class="text-center fs-4">Latest Product</p>
-
-			<div class="row">
-				
-				<div class="col-md-3" th:each="product: ${latestEightActiveProducts}">
-				<div class="card shadow-sm p-3 mb-5 bg-white rounded">
-					<div class="card-body text-center">
-						<img alt="" th:src="@{'/img/product_image/'+${product.productImage}}" width="60%"
-							height="140px">
-						<p class="text-center"><b>[[${product.productTitle}]]</b></p>
-					</div>
-				</div>
-			</div>
-			
-			
-			<!-- <div class="col-md-3">
-				<div class="card shadow-sm p-3 mb-5 bg-white rounded">
-					<div class="card-body text-center">
-						<img alt="" src="img/product_image/CasualShirt.jpg" width="60%"
-							height="140px">
-						<p class="text-center">Casual Shirt</p>
-					</div>
-				</div>
-			</div>
-			
-			
-			<div class="col-md-3">
-				<div class="card shadow-sm p-3 mb-5 bg-white rounded">
-					<div class="card-body text-center">
-						<img alt="" src="img/product_image/KnitWear.jpg" width="60%"
-							height="140px">
-						<p class="text-center">Polo Shirt</p>
-					</div>
-				</div>
-			</div>
-			
-			
-			<div class="col-md-3">
-				<div class="card shadow-sm p-3 mb-5 bg-white rounded">
-					<div class="card-body text-center">
-						<img alt="" src="img/product_image/Blazer.jpg" width="60%"
-							height="140px">
-						<p class="text-center">Men's Blazer</p>
-					</div>
-				</div>
-			</div> -->
-				
-				
-			</div>
-			
-			<!-- 2nd row -->
-			<!-- <div class="row">
-
-
-				<div class="col-md-3">
-				<div class="card shadow-sm p-3 mb-5 bg-white rounded">
-					<div class="card-body text-center">
-						<img alt="" src="img/product_image/T-Shirt.jpg" width="60%"
-							height="140px">
-						<p class="text-center">T-Shirt</p>
-					</div>
-				</div>
-			</div>
-			
-			<div class="col-md-3">
-					<div class="card shadow-sm p-3 mb-5 bg-white rounded">
-						<div class="card-body text-center">
-							<img alt="" src="img/product_image/panjabi-slim-fit.jpg" width="60%"
-								height="140px">
-							<p class="text-center">Panjabi Slim Fit</p>
-						</div>
-					</div>
-				</div>
-			
-			
-			<div class="col-md-3">
-				<div class="card shadow-sm p-3 mb-5 bg-white rounded">
-					<div class="card-body text-center">
-						<img alt="" src="img/product_image/Casual-Shirt-Slim-Fit.jpg" width="60%"
-							height="140px">
-						<p class="text-center">Slim Fit Casual Shirt</p>
-					</div>
-				</div>
-			</div>
-			
-			
-			<div class="col-md-3">
-				<div class="card shadow-sm p-3 mb-5 bg-white rounded">
-					<div class="card-body text-center">
-						<img alt="" src="img/product_image/Accessories.jpg" width="60%"
-							height="140px">
-						<p class="text-center">Belt</p>
-					</div>
-				</div>
-			</div>
-				
-				
-			</div> -->
-			<!-- 2nd row -->
-
-
-		</div>
-		
-		<!-- Latest Product for Clothing Store  -->
-		
 		
 	</section>
 </body>

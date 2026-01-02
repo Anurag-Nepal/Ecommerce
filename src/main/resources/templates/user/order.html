@@ -70,9 +70,9 @@
 							<tbody>
 								<tr th:each="cart : ${carts}">
 									<td th:text="${cart.product.productTitle}"></td>
-									<td>&#2547; <span th:text="${cart.product.discountPrice}"></span></td>
+									<td>Rs <span th:text="${cart.product.discountPrice}"></span></td>
 									<td th:text="${cart.quantity}"></td>
-									<td>&#2547; <span th:text="${cart.totalPrice}"></span></td>
+									<td>Rs <span th:text="${cart.totalPrice}"></span></td>
 								</tr>
 							</tbody>
 						</table>
@@ -86,27 +86,31 @@
 									<tr>
 										<td>Subtotal</td>
 										<td>:</td>
-										<td class="text-end">&#2547; [[${orderPrice}]]</td>
+										<td class="text-end">Rs [[${orderPrice}]]</td>
 									</tr>
 									<tr>
 										<td>Delivery Charge</td>
 										<td>:</td>
-										<td class="text-end">&#2547; 250</td>
+										<td class="text-end">Rs 250</td>
 									</tr>
 									<tr>
 										<td>Tax</td>
 										<td>:</td>
-										<td class="text-end">&#2547; 100</td>
+										<td class="text-end">Rs 100</td>
 									</tr>
 									
 									<tr class="fw-bold fs-5">
 										<td>Total Order Price</td>
 										<td>:</td>
-										<td class="text-end">&#2547; [[${totalOrderPrice}]]</td>
+										<td class="text-end">Rs [[${totalOrderPrice}]]</td>
 									</tr>
 								</tbody>
 							</table>
 					</div>
+				</div>
+
+				<div class="d-grid gap-2 mt-3">
+					<a href="/payment/create" class="btn btn-primary">Pay with Stripe</a>
 				</div>
 			</div>
 			</div>

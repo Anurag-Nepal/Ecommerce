@@ -1,5 +1,6 @@
 package com.anuragNepal.ecommerce.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -57,6 +58,25 @@ public class AdminViewController {
 	@Value("${app.upload.dir}")
 	private String uploadDir;
 	
+	// Helper method to resolve upload directory path
+	private Path resolveUploadPath(String... subPaths) {
+		File uploadFile = new File(uploadDir);
+		Path basePath;
+		
+		if (uploadFile.isAbsolute()) {
+			basePath = uploadFile.toPath();
+		} else {
+			basePath = Paths.get(uploadDir).toAbsolutePath();
+		}
+		
+		// Append sub-paths if provided
+		for (String subPath : subPaths) {
+			basePath = basePath.resolve(subPath);
+		}
+		
+		return basePath;
+	}
+	
 	//to track which user is login right Now
 	//by default call this method when any request come to this controller because of @ModelAttribut
 	@ModelAttribute 
@@ -109,7 +129,7 @@ public class AdminViewController {
 			}else {
 				// save file to external dir
 				try {
-					Path categoryPath = Paths.get(uploadDir, "category");
+					Path categoryPath = resolveUploadPath("category");
 					Files.createDirectories(categoryPath);
 					Path path = categoryPath.resolve(file.getOriginalFilename());
 					Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
@@ -187,7 +207,7 @@ public class AdminViewController {
 				//save File
 				if(!file.isEmpty()) {
 					// save file to external dir
-					Path categoryPath = Paths.get(uploadDir, "category");
+					Path categoryPath = resolveUploadPath("category");
 					Files.createDirectories(categoryPath);
 					Path path = categoryPath.resolve(file.getOriginalFilename());
 					Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
@@ -255,7 +275,7 @@ public class AdminViewController {
 		 
 		if(!ObjectUtils.isEmpty(saveProduct)) {
 			try {
-				Path productPath = Paths.get(uploadDir, "product_image");
+				Path productPath = resolveUploadPath("product_image");
 				Files.createDirectories(productPath);
 				Path path = productPath.resolve(imageName);
 				System.out.println("File save Path :"+path);

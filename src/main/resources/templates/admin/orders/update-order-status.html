@@ -44,7 +44,7 @@
 						</div>
 						<div class="col-md-6">
 							<p><strong>Order Date:</strong> [[${#temporals.format(order.orderDate, 'dd-MMM-yyyy HH:mm:ss')}]]</p>
-							<p><strong>Total Price:</strong> &#2547; [[${order.totalPrice}]]</p>
+							<p><strong>Total Price:</strong> Rs [[${order.totalPrice}]]</p>
 							<p><strong>Current Status:</strong>
 								<span th:if="${order.orderStatus == 'Pending'}" class="badge bg-warning text-dark">Pending</span>
 								<span th:if="${order.orderStatus == 'Confirmed'}" class="badge bg-info">Confirmed</span>

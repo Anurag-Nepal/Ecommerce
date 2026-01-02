@@ -30,31 +30,25 @@ public class CartServiceImpl implements CartService{
 	
 	@Override
 	public Cart saveCart(Long productId, Long userId) {
-		
-		User user = userRepository.findById(userId).get();
-		Product product = productRepository.findById(productId).get();
-		
-		Cart cartStatus = cartRepository.findByProductIdAndUserId(productId, userId);
-		
-		Cart cart = null;
-		
-		if(ObjectUtils.isEmpty(cartStatus)) {
-			//cart Is empty - so add product to Cart
-			cart = new Cart();
-			cart.setUser(user);
-			cart.setProduct(product);
-			cart.setQuantity(1);
-			cart.setTotalPrice(1 * product.getDiscountPrice());
-		}else {
-			//cart Is holding product. so increases the quantity of the existing product.
-			cart =cartStatus;
-			cart.setQuantity(cart.getQuantity()+1);
-			cart.setTotalPrice(cart.getQuantity() * cart.getProduct().getDiscountPrice());
-		}
-		Cart saveCart = cartRepository.save(cart);
-		
-		return saveCart;
-	}
+        User user = userRepository.findById(userId).orElseThrow();
+        Product product = productRepository.findById(productId).orElseThrow();
+
+        Double unitPrice = product.getDiscountPrice() != null ? product.getDiscountPrice() : product.getProductPrice();
+        Cart cartStatus = cartRepository.findByProductIdAndUserId(productId, userId);
+        Cart cart;
+        if(ObjectUtils.isEmpty(cartStatus)) {
+            cart = new Cart();
+            cart.setUser(user);
+            cart.setProduct(product);
+            cart.setQuantity(1);
+            cart.setTotalPrice(unitPrice);
+        } else {
+            cart = cartStatus;
+            cart.setQuantity(cart.getQuantity() + 1);
+            cart.setTotalPrice(cart.getQuantity() * unitPrice);
+        }
+        return cartRepository.save(cart);
+    }
 
 	@Override
 	public List<Cart> getCartsByUser(Long userId) {
@@ -68,14 +62,11 @@ public class CartServiceImpl implements CartService{
 		// we need to fetch it
 	 List<Cart> updatedCartList = new ArrayList<>();
 		for (Cart cart : carts) {
-			Double totalPrice = (cart.getProduct().getDiscountPrice() * cart.getQuantity());
+			Double unitPrice = cart.getProduct().getDiscountPrice() != null ? cart.getProduct().getDiscountPrice() : cart.getProduct().getProductPrice();
+			Double totalPrice = unitPrice * cart.getQuantity();
 			cart.setTotalPrice(totalPrice);
-			System.out.println("totalPrice is :"+totalPrice);
-			
 			totalOrderPrice = totalOrderPrice + totalPrice;
-			
 			cart.setTotalOrderPrice(totalOrderPrice);
-			System.out.println("totalOrderPrice is :"+totalOrderPrice);
 			updatedCartList.add(cart);
 		}
 		
@@ -86,8 +77,7 @@ public class CartServiceImpl implements CartService{
 
 	@Override
 	public Long getCounterCart(Long userId) {
-		Long cartCountByUserId = cartRepository.countByUserId(userId);
-		return cartCountByUserId;
+		return cartRepository.countByUserId(userId);
 	}
 
 	@Override
@@ -123,5 +113,3 @@ public class CartServiceImpl implements CartService{
 	}
 
 }
-
-

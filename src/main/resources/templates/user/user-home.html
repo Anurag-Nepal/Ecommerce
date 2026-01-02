@@ -26,11 +26,11 @@
 								<h5 class="card-title">[[${product.productTitle}]]</h5>
 								<p class="card-text">
 									<span th:if="${product.discountPrice != null}">
-										<strong>&#2547; [[${product.discountPrice}]]</strong>
-										<del class="text-muted">&#2547; [[${product.productPrice}]]</del>
+										<strong>Rs [[${product.discountPrice}]]</strong>
+										<del class="text-muted">Rs [[${product.productPrice}]]</del>
 									</span>
-									<span th:unless="${product.discountPrice != null}">
-										<strong>&#2547; [[${product.productPrice}]]</strong>
+									<span th:if="${product.discountPrice == null}">
+										<strong>Rs [[${product.productPrice}]]</strong>
 									</span>
 								</p>
 								<div class="d-grid gap-2">

@@ -54,7 +54,7 @@
 									<td th:text="${order.id}"></td>
 									<td th:text="${order.user.name}"></td>
 									<td th:text="${order.user.email}"></td>
-									<td>&#2547; <span th:text="${order.totalPrice}"></span></td>
+									<td>Rs <span th:text="${order.totalPrice}"></span></td>
 									<td>
 										<span th:if="${order.orderStatus == 'Pending'}" class="badge bg-warning text-dark">
 											<i class="fas fa-hourglass-half"></i> Pending

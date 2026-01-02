@@ -76,19 +76,21 @@ public class UserController {
 	
 	//ADD TO CART Module
 	@GetMapping("/add-to-cart")
-	String addToCart(@RequestParam Long productId, @RequestParam Long userId, HttpSession session) {
-		System.out.println("INSIDE ITS");
-		Cart saveCart = cartService.saveCart(productId, userId);
-		
-		//System.out.println("save Cart is :"+saveCart);
-		if(ObjectUtils.isEmpty(saveCart)) {
-			System.out.println("INSIDE Error");
-			session.setAttribute("errorMsg", "Failed Product add to Cart");
-		}else {
-			session.setAttribute("successMsg", "Successfully, Product added to Cart");
-		}
-		System.out.println("pid"+productId+" uid:"+userId);
-		return "redirect:/product/" + productId;
+	String addToCart(@RequestParam Long productId, Principal principal, HttpSession session) {
+	    if (principal == null) {
+	        session.setAttribute("errorMsg", "Please login to add items to cart");
+	        return "redirect:/signin";
+	    }
+
+	    User currentUser = getLoggedUserDetails(principal);
+	    Cart saveCart = cartService.saveCart(productId, currentUser.getId());
+
+	    if (ObjectUtils.isEmpty(saveCart)) {
+	        session.setAttribute("errorMsg", "Failed to add product to cart");
+	    } else {
+	        session.setAttribute("successMsg", "Product added to cart");
+	    }
+	    return "redirect:/product/" + productId;
 	}
 	
 	@GetMapping("/cart")
@@ -117,8 +119,7 @@ public class UserController {
 
 	private User getLoggedUserDetails(Principal principal) {
 		String email = principal.getName();
-		User user = userService.getUserByEmail(email);
-		return user;
+		return userService.getUserByEmail(email);
 	}
 	
 	

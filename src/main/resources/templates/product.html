@@ -73,15 +73,15 @@ element.style {
 									<div class="card">
 										<div class="card-body">
 											<img alt="product_image"
-												th:src="@{'img/product_image/'+${product.productImage}}"
+												th:src="@{'/uploads/product_image/'+${product.productImage}}"
 												width="100%" height="150px">
 											<p class="fs-5 text-center">[[${product.productTitle}]]</p>
 
 											<div class="row text-center">
 												<p class="fs-6 fw-bold">
-													<span>&#2547; [[${product.discountPrice}]]</span><br>
+													<span>Rs [[${product.discountPrice}]]</span><br>
 													<span class="text-decoration-line-through text-secondary">
-														&#2547; [[${product.productPrice}]]</span> 
+														Rs [[${product.productPrice}]]</span>
 													<span class="fs-6 text-success">[[${product.discount}]] %
 														Off</span>
 												</p>

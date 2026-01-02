@@ -25,24 +25,39 @@
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>	
 
 <style type="text/css">
+:root {
+    --primary: #667eea;
+    --secondary: #764ba2;
+    --text-dark: #2d3748;
+}
 
-
-/* change the color of active category */
 .list-group-item.active {
     z-index: 2;
-    
-    background-color: #DC3545;
-    border-color: #DC3545;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    border-color: var(--primary);
+}
+
+.navbar-modern {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%) !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+.navbar-modern .nav-link { color: rgba(255,255,255,0.9) !important; font-weight: 500; }
+.navbar-modern .nav-link:hover { background: rgba(255,255,255,0.15); color: #fff !important; }
+.navbar-modern .navbar-brand { color: #fff !important; font-weight: 700; }
+
+.footer-modern {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%) !important;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
 }
 </style>
 
 </head>
 <body>
-	<!-- Start navbar -->
-	<nav class="navbar navbar-expand-lg bg-danger navbar-dark">
-		<div class="container-fluid">
-			<a class="navbar-brand" href="/"><i class="fa-solid fa-cart-shopping"></i> <i><b>Anurag Nepal Clothing</b></i></a>
-			<button class="navbar-toggler" type="button"
+    <!-- Start navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-modern">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><i class="fa-solid fa-store"></i> Anurag Clothing</a>
+            <button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
 				aria-controls="navbarSupportedContent" aria-expanded="false"
 				aria-label="Toggle navigation">
@@ -69,57 +84,88 @@
 				<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 					
 					<th:block th:if="${currentLoggedInUserDetails == null}">
-						<li class="nav-item"><a class="nav-link active"
-							aria-current="page" href="/signin"><i class="fa-solid fa-right-to-bracket"></i> LOGIN</a></li>
-						<li class="nav-item"><a class="nav-link active"
-							aria-current="page" href="/register">REGISTER</a></li>
-						<li class="nav-item"><a class="nav-link active"
-							aria-current="page" href="/admin/">ADMIN</a></li>
+						<li class="nav-item">
+							<a class="nav-link" href="/signin">
+								<i class="fa-solid fa-right-to-bracket"></i> Login
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/register">
+								<i class="fa-solid fa-user-plus"></i> Register
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/admin/">
+								<i class="fa-solid fa-user-shield"></i> Admin
+							</a>
+						</li>
 					</th:block>
 
 					<!-- User Menu (Regular Users Only) -->
 					<th:block th:if="${currentLoggedInUserDetails != null && currentLoggedInUserDetails.role == 'ROLE_USER'}">
-						<li class="nav-item"><a class="nav-link active"
-							aria-current="page" href="/user/cart"><i class="fas fa-cart-shopping"></i> Cart [ [[${countCartForUser}]] ]</a></li>
-						
-						<li class="nav-item dropdown">
-						
-						<a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 
-							<i class="fas fa-user-check"></i> [[${currentLoggedInUserDetails.name}]] </a>
-							
-							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="/user/profile">My Profile</a></li>
-								<li><a class="dropdown-item" href="/user/orders">My Orders</a></li>
-								<li><a class="dropdown-item" href="/user/cart">My Cart</a></li>
-								<li><hr class="dropdown-divider"></li>
-								<li><a class="dropdown-item" href="/admin/">Admin Dashboard</a></li>
-							</ul>
+						<li class="nav-item">
+							<a class="nav-link" href="/user/cart">
+								<i class="fas fa-cart-shopping"></i>
+								<span class="badge bg-white text-dark rounded-pill">[[${countCartForUser}]]</span>
+							</a>
 						</li>
 
-						<li class="nav-item"><a class="nav-link active"
-							aria-current="page" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" role="button"
+								data-bs-toggle="dropdown" aria-expanded="false">
+								<i class="fas fa-user-circle"></i> [[${currentLoggedInUserDetails.name}]]
+							</a>
+							<ul class="dropdown-menu dropdown-menu-end">
+								<li><a class="dropdown-item" href="/user/profile">
+									<i class="fas fa-user"></i> My Profile
+								</a></li>
+								<li><a class="dropdown-item" href="/user/orders">
+									<i class="fas fa-shopping-bag"></i> My Orders
+								</a></li>
+								<li><a class="dropdown-item" href="/user/cart">
+									<i class="fas fa-cart-shopping"></i> My Cart
+								</a></li>
+								<li><hr class="dropdown-divider"></li>
+								<li><a class="dropdown-item" href="/logout">
+									<i class="fas fa-sign-out-alt"></i> Logout
+								</a></li>
+							</ul>
+						</li>
 					</th:block>
 
 					<!-- Admin Menu (Admin Users Only) -->
 					<th:block th:if="${currentLoggedInUserDetails != null && currentLoggedInUserDetails.role == 'ROLE_ADMIN'}">
 						<li class="nav-item dropdown">
-
-						<a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							<i class="fas fa-user-shield"></i> [[${currentLoggedInUserDetails.name}]] </a>
-
-							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="/admin/">Dashboard</a></li>
-								<li><a class="dropdown-item" href="/admin/manage-orders">Manage Orders</a></li>
-								<li><a class="dropdown-item" href="/admin/get-all-users">Manage Users</a></li>
-								<li><a class="dropdown-item" href="/admin/manage-admins">Manage Admins</a></li>
+							<a class="nav-link dropdown-toggle" href="#" role="button"
+								data-bs-toggle="dropdown" aria-expanded="false">
+								<i class="fas fa-user-shield"></i> [[${currentLoggedInUserDetails.name}]]
+							</a>
+							<ul class="dropdown-menu dropdown-menu-end">
+								<li><a class="dropdown-item" href="/admin/">
+									<i class="fas fa-dashboard"></i> Dashboard
+								</a></li>
+								<li><a class="dropdown-item" href="/admin/manage-orders">
+									<i class="fas fa-receipt"></i> Manage Orders
+								</a></li>
+								<li><a class="dropdown-item" href="/admin/get-all-users">
+									<i class="fas fa-users"></i> Manage Users
+								</a></li>
+								<li><a class="dropdown-item" href="/admin/manage-admins">
+									<i class="fas fa-user-tie"></i> Manage Admins
+								</a></li>
 								<li><hr class="dropdown-divider"></li>
-								<li><a class="dropdown-item" href="/admin/category">Categories</a></li>
-								<li><a class="dropdown-item" href="/admin/product-list">Products</a></li>
+								<li><a class="dropdown-item" href="/admin/category">
+									<i class="fas fa-layer-group"></i> Categories
+								</a></li>
+								<li><a class="dropdown-item" href="/admin/product-list">
+									<i class="fas fa-box"></i> Products
+								</a></li>
+								<li><hr class="dropdown-divider"></li>
+								<li><a class="dropdown-item" href="/logout">
+									<i class="fas fa-sign-out-alt"></i> Logout
+								</a></li>
 							</ul>
 						</li>
-
-						<li class="nav-item"><a class="nav-link active"
-							aria-current="page" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
 					</th:block>
 	
 				</ul>
@@ -130,10 +176,21 @@
 	<!-- End of navbar -->
 	<div th:replace="${content}"></div>
 
-	<!-- start footer -->
-	<div class="container-fluid p-1 bg-danger text-center text-white" style="margin-top: 200px;">
-		<p class="mt-2"><i><b>Anurag Nepal</b></i><br><a href="https://github.com/anurag-nepal" style="text-decoration:none; color:white;" target="_blank">Anurag Nepal Clothing</a><br>Copyright &copy; 2025. All rights Reserved</p>
-	</div>	
+	<!-- Modern Footer -->
+	<div class="container-fluid p-4 footer-modern text-center text-white" style="margin-top: 200px;">
+        <div class="row">
+            <div class="col-md-12">
+                <h5 class="mb-3"><i class="fa-solid fa-store"></i> Anurag Clothing</h5>
+                <p class="mb-2">Your trusted online shopping destination</p>
+                <p class="small mb-0">
+					<a href="https://github.com/anurag-nepal" style="text-decoration:none; color:white;" target="_blank">
+						Developed by Anurag Nepal
+					</a>
+				</p>
+                <p class="small mt-2">Copyright &copy; 2025-2026. All rights Reserved</p>
+            </div>
+        </div>
+    </div>
 	<!-- End footer -->
 
 	<!-- Initialize Toast -->
