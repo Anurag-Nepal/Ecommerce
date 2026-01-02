@@ -6,31 +6,22 @@
 <title>Product</title>
 
 <style>
-
+/* Page-specific tweaks */
 .list-group-item.active {
-    z-index: 2;
-    
-    background-color: #DC3545;
-    border-color: #DC3545;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    border-color: #667eea !important;
+    color: #fff;
 }
-
-element.style {
-    z-index: 2;
-    /* color: #DC3545; */
-    background-color: #DC3545;
-    border-color: #DC3545;
-}
-
 </style>
 </head>
 <body>
-	<section>f
-		<div class="container-fluid bg-danger p-5">
+	<section>
+		<div class="container-fluid" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);" >
 			<div class="row">
 				<div class="col-md-8 offset-md-2">
 					<form action="">
 						<div class="input-group">
-							<input class="form-control" type="text" name="search">
+							<input class="form-control" type="text" name="search" aria-label="Search products">
 							<button class="btn btn-light text-dark ms-3 col-md-2" type="submit"><i class="fa-solid fa-magnifying-glass"></i> Search Product</button>
 						</div>
 					</form>
@@ -107,11 +98,6 @@ element.style {
 			</div>
 		</div>
 		<!-- category side bar end -->
-		<script>
-		element.style.zIndex = 2;
-		element.style.backgroundColor = "#DC3545";
-		element.style.borderColor = "#DC3545";
-		</script>
 	</section>
 </body>
 </html>
