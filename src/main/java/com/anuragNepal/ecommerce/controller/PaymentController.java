@@ -58,8 +58,7 @@ public class PaymentController {
         }
         User user = userService.getUserByEmail(principal.getName());
         cartService.deleteCartByUser(user.getId());
-        model.addAttribute("successMsg", "Payment successful via Stripe. Your cart has been cleared.");
-        return "message";
+        return "payment-success";
     }
 
     @GetMapping("/cancel")
