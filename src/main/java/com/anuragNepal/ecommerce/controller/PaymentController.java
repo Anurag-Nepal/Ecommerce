@@ -52,8 +52,13 @@ public class PaymentController {
     }
 
     @GetMapping("/return")
-    public String paymentReturn(Model model) {
-        model.addAttribute("successMsg", "Payment successful via Stripe");
+    public String paymentReturn(Principal principal, Model model) {
+        if (principal == null) {
+            return "redirect:/signin";
+        }
+        User user = userService.getUserByEmail(principal.getName());
+        cartService.deleteCartByUser(user.getId());
+        model.addAttribute("successMsg", "Payment successful via Stripe. Your cart has been cleared.");
         return "message";
     }
 
